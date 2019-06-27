@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include<ZinxTCP.h>
 #include"GameProtocol.h"
+#include"GameChannel.h"
 class GameChannel :
 	public ZinxTcpData
 {
