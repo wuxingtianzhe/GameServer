@@ -39,6 +39,7 @@
     <ClInclude Include="GameMsg.h" />
     <ClInclude Include="GameProtocol.h" />
     <ClInclude Include="GameRole.h" />
+    <ClInclude Include="msg.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameChannel.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="GameProtocol.cpp" />
     <ClCompile Include="GameRole.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="msg.pb.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{93bec994-9da0-4eb2-8f13-168d2d83c189}</ProjectGuid>
@@ -89,7 +91,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
-      <LibraryDependencies>zinx</LibraryDependencies>
+      <LibraryDependencies>zinx;protobuf;pthread</LibraryDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
