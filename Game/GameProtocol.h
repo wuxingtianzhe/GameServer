@@ -3,6 +3,7 @@
 class GameProtocol :
 	public Iprotocol
 {
+	std::string szLast;
 public:
 	GameProtocol();
 	virtual ~GameProtocol();
