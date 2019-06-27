@@ -1,13 +1,7 @@
-﻿  Cleaning remote project directory
-  Validating sources
+﻿  Validating sources
   Copying sources remotely to '192.168.253.130'
   Validating architecture
   Starting remote build
   Compiling sources:
-  GameChannel.cpp
-  GameMsg.cpp
-  GameProtocol.cpp
-  GameRole.cpp
-  main.cpp
   Linking objects
   Game.vcxproj -> E:\Study\Itcast\work\GameServer\Game\Game\bin\x64\Debug\Game.out
