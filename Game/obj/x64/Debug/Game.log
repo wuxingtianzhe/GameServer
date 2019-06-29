@@ -4,6 +4,7 @@
   Validating architecture
   Starting remote build
   Compiling sources:
+  AOIWorld.cpp
   GameChannel.cpp
   GameMsg.cpp
 E:\Study\Itcast\work\GameServer\Game\Game\GameMsg.h(18,3): warning : ‘GameMsg::enMsgType’ will be initialized after [-Wreorder]
