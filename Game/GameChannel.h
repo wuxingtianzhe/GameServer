@@ -9,6 +9,7 @@ public:
 	GameChannel(int _fd);
 	virtual ~GameChannel();
 	GameProtocol* m_proto = NULL;
+	
 	// 通过 ZinxTcpData 继承
 	virtual AZinxHandler * GetInputNextStage(BytesMsg & _oInput) override;
 };

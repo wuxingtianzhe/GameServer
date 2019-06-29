@@ -1,12 +1,14 @@
 ﻿#pragma once
 #include "zinx.h"
 class GameChannel;
+class GameRole;
 class GameProtocol :
 	public Iprotocol
 {
 	std::string szLast;
 public:
 	GameChannel* m_channel = NULL;
+	GameRole* m_role = NULL;
 	GameProtocol();
 	virtual ~GameProtocol();
 

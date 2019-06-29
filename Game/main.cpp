@@ -4,7 +4,7 @@
 #include"GameMsg.h"
 int main(int argc, char *argv[])
 {
-	pb::SyncPid *pmsg = new pb::SyncPid();
+	/*pb::SyncPid *pmsg = new pb::SyncPid();
 	pmsg->set_pid(1);
 	pmsg->set_username("test");
 
@@ -18,11 +18,11 @@ int main(int argc, char *argv[])
 	puts("");
 
 	char buff[] = { 0x08, 0x01, 0x12, 0x04 ,0x74, 0x65, 0x73, 0x74 };
-	std::string input(buff, sizeof(buff));
+	std::string input(buff, sizeof(buff));*/
 
-	auto ingm = GameMsg(GameMsg::MSG_TYPE_LOGIN_ID_NAME, input);
+	/*auto ingm = GameMsg(GameMsg::MSG_TYPE_LOGIN_ID_NAME, input);
 	std::cout << dynamic_cast<pb::SyncPid *> (ingm.pMsg)->pid() << std::endl;
-	std::cout << dynamic_cast<pb::SyncPid *> (ingm.pMsg)->username() << std::endl;
+	std::cout << dynamic_cast<pb::SyncPid *> (ingm.pMsg)->username() << std::endl;*/
 	ZinxKernel::ZinxKernelInit();
 	/*add the listen channle*/
 	ZinxKernel::Zinx_Add_Channel(*(new ZinxTCPListen(8899 , new GameConnFact())));

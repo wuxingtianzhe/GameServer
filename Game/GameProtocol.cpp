@@ -2,6 +2,7 @@
 #include"GameMsg.h"
 #include"msg.pb.h"
 #include"GameChannel.h"
+#include"GameRole.h"
 using namespace std;
 
 
@@ -49,14 +50,14 @@ UserData * GameProtocol::raw2request(std::string _szInput)
 		pRet->m_Msgs.push_back(pMsg);
 		szLast.erase(0, 8 + iLength);
 	}
-	for (auto single:pRet->m_Msgs)	{
-		/*将*/
-	cout << single->pMsg->Utf8DebugString() << endl;
-	}
-	pb::Talk* pmsg = new pb::Talk();
-	pmsg->set_content("hello");
-	GameMsg* pGameMsg = new GameMsg(GameMsg::MSG_TYPE_CHAT_CONTENT, pmsg);
-	ZinxKernel::Zinx_SendOut(*pGameMsg, *this);
+	//for (auto single:pRet->m_Msgs)	{
+	//	/*将*/
+	//cout << single->pMsg->Utf8DebugString() << endl;
+	//}
+	//pb::Talk* pmsg = new pb::Talk();
+	//pmsg->set_content("hello");
+	//GameMsg* pGameMsg = new GameMsg(GameMsg::MSG_TYPE_CHAT_CONTENT, pmsg);
+	//ZinxKernel::Zinx_SendOut(*pGameMsg, *this);
 
 	return pRet;
 }
@@ -91,7 +92,7 @@ std::string * GameProtocol::response2raw(UserData & _oUserData)
 
 Irole * GameProtocol::GetMsgProcessor(UserDataMsg & _oUserDataMsg)
 {
-	return nullptr;
+	return m_role;
 }
 /*返回数据发送的通道*/
 Ichannel * GameProtocol::GetMsgSender(BytesMsg & _oBytes)
