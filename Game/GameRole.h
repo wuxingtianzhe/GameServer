@@ -17,7 +17,7 @@ private:
 	GameMsg*  createIDNameLogoff();
 	GameMsg* createSrdPlayers();
 	GameMsg* createSelfPostion();
-	 
+	GameMsg*  createTalkBroadCast(std::string _content);
 
 
 public:

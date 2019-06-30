@@ -64,6 +64,17 @@ GameMsg * GameRole::createSelfPostion()
 	return pret;
 }
 
+GameMsg * GameRole::createTalkBroadCast(std::string _content)
+{
+	pb::BroadCast* pmsg = new pb::BroadCast();
+	pmsg->set_pid(iPid);
+	pmsg->set_username(szName);
+	pmsg->set_tp(1);
+	pmsg->set_content(_content);
+	GameMsg* pRet = new GameMsg(GameMsg::MSG_TYPE_BROADCAST, pmsg);
+	return pRet;
+}
+
 GameRole::GameRole()
 {
 	szName = "Tom";
@@ -113,6 +124,46 @@ UserData * GameRole::ProcMsg(UserData & _poUserData)
 	{
 		std::cout << "type is " << single->enMsgType <<std::endl;
 		std::cout << single->pMsg->Utf8DebugString() << std::endl;
+		/*聊天信息处理*/
+		if (single->enMsgType==GameMsg::MSG_TYPE_CHAT_CONTENT)
+		{
+			/*取出聊天内容*/
+			auto content = dynamic_cast<pb::Talk*>(single->pMsg)->content();
+			/*发给所有人*/
+			auto role_list = ZinxKernel::Zinx_GetAllRole();
+			for (auto pRole:role_list)
+			{
+				auto pGameRole = dynamic_cast<GameRole*>(pRole);
+				auto pmsg = createTalkBroadCast(content);
+				ZinxKernel::Zinx_SendOut(*pmsg, *(pGameRole->m_pProto));
+			}
+		}
+		/*向周围玩家发送自己位置*/
+		if (single->enMsgType == GameMsg::MSG_TYPE_NEW_POSITION)
+		{
+			/*取出新位置*/
+			auto NewPos = dynamic_cast<pb::Position*>(single->pMsg);
+			/*遍历周围的玩家发送*/
+			/*向周围玩家发送自己的位置*/
+			auto srd_list = world.GetSrdPlayers(this);
+
+			for (auto single : srd_list)
+			{
+				//组成待发送的报文 
+				pb::BroadCast* pMsg = new pb::BroadCast();
+				auto pPos = pMsg->mutable_p();
+				pPos->set_x(NewPos->x());
+				pPos->set_y(NewPos->y());
+				pPos->set_z(NewPos->z());
+				pPos->set_v(NewPos->v());
+				pMsg->set_pid(iPid);
+				pMsg->set_tp(4);
+				pMsg->set_username(szName);
+				auto pRole = dynamic_cast<GameRole*>(single);
+				auto msg = new GameMsg(GameMsg::MSG_TYPE_BROADCAST, pMsg);
+				ZinxKernel::Zinx_SendOut(*msg, *(pRole->m_pProto));
+			}
+		}
 	}
 	return nullptr;
 }
