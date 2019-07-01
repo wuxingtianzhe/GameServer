@@ -5,6 +5,7 @@
 #include"msg.pb.h"
 #include"GameChannel.h"
 #include"GameProtocol.h"
+#include<random>
 using namespace std;
 /*创建游戏世界的全局对象*/
 static AOIWorld world(0, 400, 0, 400, 20, 20);
@@ -148,12 +149,12 @@ GameMsg * GameRole::createTalkBroadCast(std::string _content)
 	GameMsg* pRet = new GameMsg(GameMsg::MSG_TYPE_BROADCAST, pmsg);
 	return pRet;
 }
-
+static default_random_engine random_engine(time(NULL));
 GameRole::GameRole()
 {
 	szName = "Tom";
-	  x =100;
-	  z =100;
+	  x =100+random_engine()%50;
+	  z =100+random_engine() % 50;
 
 }
 
