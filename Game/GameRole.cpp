@@ -6,8 +6,12 @@
 #include"GameChannel.h"
 #include"GameProtocol.h"
 #include<random>
+#include<algorithm>
+#include"ZinxTimer.h"
+#include"RandName.h"
 using namespace std;
 /*创建游戏世界的全局对象*/
+RandName random_name;
 static AOIWorld world(0, 400, 0, 400, 20, 20);
 void GameRole::procMoveMsg(float _x, float _y, float _z, float _v)
 {
@@ -152,7 +156,9 @@ GameMsg * GameRole::createTalkBroadCast(std::string _content)
 static default_random_engine random_engine(time(NULL));
 GameRole::GameRole()
 {
-	szName = "Tom";
+
+	//szName = "Tom";
+	szName = random_name.GetName();
 	  x =100+random_engine()%50;
 	  z =100+random_engine() % 50;
 
@@ -161,10 +167,28 @@ GameRole::GameRole()
 
 GameRole::~GameRole()
 {
+	random_name.Rlease(szName);
 }
-
+class ExitTimer :public TimerOutProc
+{
+	// 通过 TimerOutProc 继承
+	virtual void Proc() override
+	{
+		ZinxKernel::Zinx_Exit();
+	}
+	virtual int GetTImeSec() override
+	{
+		return 20;
+	}
+};
+static ExitTimer g_exit_timer;
 bool GameRole::Init()
 {
+	if (ZinxKernel::Zinx_GetAllRole().size() <= 0)
+	{
+		//启动定时器
+		TimerOutMng::GetInstance().DelTask(&g_exit_timer);
+	}
 	/*添加到自己到游戏世界*/
 	bool bRet = false;
 	/*设置玩家ID为当前链接的fd*/
@@ -238,6 +262,12 @@ void GameRole::Fini()
 		ZinxKernel::Zinx_SendOut(*pmsg, *(pRole->m_pProto));
 	}
 	world.DelPlayer(this);
+	/*判断是否是最后一个玩家---》起定时器*/
+	if (ZinxKernel::Zinx_GetAllRole().size()<=1)
+	{
+		//启动定时器
+		TimerOutMng::GetInstance().AddTask(&g_exit_timer);
+	}
 }
 
 int GameRole::GetX()

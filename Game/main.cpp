@@ -2,22 +2,25 @@
 #include"msg.pb.h"
 #include"GameMsg.h"
 #include"AOIWorld.h"
-class myPlayer :public Player {
-public:
-	myPlayer(int _x, int _y, std::string _name) :x(_x), y(_y), name(_name) {}
-	int x;
-	int y;
-	std::string name;
-	// 通过 Player 继承
-	virtual int GetX() override
-	{
-		return x;
-	}
-	virtual int GetY() override
-	{
-		return y;
-	}
-};
+#include"ZinxTimer.h"
+#include"RandName.h"
+extern RandName random_name;
+//class myPlayer :public Player {
+//public:
+//	myPlayer(int _x, int _y, std::string _name) :x(_x), y(_y), name(_name) {}
+//	int x;
+//	int y;
+//	std::string name;
+//	// 通过 Player 继承
+//	virtual int GetX() override
+//	{
+//		return x;
+//	}
+//	virtual int GetY() override
+//	{
+//		return y;
+//	}
+//};
 
 int main(int argc, char *argv[])
 {
@@ -42,7 +45,7 @@ int main(int argc, char *argv[])
 	std::cout << dynamic_cast<pb::SyncPid *> (ingm.pMsg)->pid() << std::endl;
 	std::cout << dynamic_cast<pb::SyncPid *> (ingm.pMsg)->username() << std::endl;*/
 	/* 测试代码3*/
-	AOIWorld w(20, 200, 50, 230, 6, 6);
+	/*AOIWorld w(20, 200, 50, 230, 6, 6);
 	myPlayer p1(60, 107, "1");
 	myPlayer p2(91, 118, "2");
 	myPlayer p3(147, 133, "3");
@@ -53,11 +56,12 @@ int main(int argc, char *argv[])
 	for (auto single : srd_list)
 	{
 		std::cout << dynamic_cast<myPlayer *>(single)->name << std::endl;
-	}
+	}*/
+	random_name.LoadFile();
 	ZinxKernel::ZinxKernelInit();
 	/*add the listen channle*/
 	ZinxKernel::Zinx_Add_Channel(*(new ZinxTCPListen(8899 , new GameConnFact())));
-
+	ZinxKernel::Zinx_Add_Channel(*(new ZinxTimerChannel()));
 	ZinxKernel::Zinx_Run();
 	ZinxKernel::ZinxKernelFini();
 	return EXIT_SUCCESS;
