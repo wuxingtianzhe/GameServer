@@ -13,6 +13,9 @@ private:
 	float v = 0;
 	int iPid = 0;
 	std::string szName;
+	void procMoveMsg(float _x, float _y, float _z, float _v);
+	void ViewAppear(GameRole* _pRole);
+	void ViewLost(GameRole* _pRole);
 	GameMsg*  createIDNameLogin();
 	GameMsg*  createIDNameLogoff();
 	GameMsg* createSrdPlayers();
