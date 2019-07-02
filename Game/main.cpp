@@ -22,6 +22,58 @@ extern RandName random_name;
 //	}
 //};
 
+
+//守护进程
+void daemonlize()
+{
+	//1.fork
+	int ipid = fork();
+	//2.父进程推出
+	if (0>ipid)
+	{
+		exit(-1);
+	}
+	if (0<ipid)
+	{
+		//2.父进程退出
+		exit(0);
+	}
+	//3.子进程设置会话id
+	setsid();
+	//4.子进程设置执行路径
+	//5.子进程重定向3个文件描述符/dev/null
+	int nullfd = open("/dev/null", O_RDWR);
+		if (nullfd>=0)
+		{
+			dup2(nullfd, 0);
+			dup2(nullfd, 1);
+			dup2(nullfd, 2);
+			close(nullfd);
+		}
+		//进程监控
+		while (1)
+		{
+			int pid = fork();
+			if (0>pid)
+			{
+				exit(-1);
+			}
+			/*父进程等子进程退出*/
+			if (0<pid)
+			{
+				int iStatus = 0;
+				wait(&iStatus);
+				if (0 == iStatus)
+				{
+					exit(0);
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+}
 int main(int argc, char *argv[])
 {
 	/*测试代码1*/
@@ -57,6 +109,7 @@ int main(int argc, char *argv[])
 	{
 		std::cout << dynamic_cast<myPlayer *>(single)->name << std::endl;
 	}*/
+	daemonlize();
 	random_name.LoadFile();
 	ZinxKernel::ZinxKernelInit();
 	/*add the listen channle*/

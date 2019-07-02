@@ -9,6 +9,8 @@
 #include<algorithm>
 #include"ZinxTimer.h"
 #include"RandName.h"
+#include<fstream>
+#include<hiredis/hiredis.h>
 using namespace std;
 /*创建游戏世界的全局对象*/
 RandName random_name;
@@ -212,6 +214,18 @@ bool GameRole::Init()
 		}
 
 	}
+
+	//1通过写入文件的形式
+	////以追加的形式记录当前姓名到文件
+	//ofstream name_record("/tmp/name_record",ios::app);
+	//name_record << szName << endl;
+	//2.通过redis
+	redisContext* context= redisConnect("127.0.0.1", 6379);
+	if (NULL!=context)
+	{
+		freeReplyObject(redisCommand(context, "lpush game_name %s", szName.c_str()));
+		redisFree(context);
+	}
 	return bRet;
 }
 /*处理游戏相关的用户请求*/
@@ -268,6 +282,35 @@ void GameRole::Fini()
 		//启动定时器
 		TimerOutMng::GetInstance().AddTask(&g_exit_timer);
 	}
+	//从文件中删除当前姓名
+	//1.c从文件中读取姓名
+	//list<string> name_list;
+	//ifstream input("/tmp/name_record");
+	//string tmp;
+	//while (getline(input,tmp))
+	//{
+	//	name_list.push_back(tmp);
+	//}
+	////2.删除 当前姓名
+	////3.写入其余姓名
+	//ofstream output("/ tmp / name_record", ios::app);
+	//for (auto namelisg : name_list)
+	//{
+	//	if (namelisg!=szName)
+	//	{
+	//		output << namelisg;
+	//	}
+	//}
+
+	//redis
+	redisContext* context = redisConnect("127.0.0.1", 6379);
+	if (NULL != context)
+	{
+		freeReplyObject(redisCommand(context, "lrem game_name 1 %s", szName.c_str()));
+
+		redisFree(context);
+	}
+
 }
 
 int GameRole::GetX()

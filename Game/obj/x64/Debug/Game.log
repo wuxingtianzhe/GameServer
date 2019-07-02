@@ -43,12 +43,12 @@ E:\Study\Itcast\work\GameServer\Game\Game\GameProtocol.cpp(92,29): warning : con
 E:\Study\Itcast\work\GameServer\Game\Game\GameProtocol.cpp(92,29): warning :   pret->push_back((id >> 24 )& 0xff);
 E:\Study\Itcast\work\GameServer\Game\Game\GameProtocol.cpp(92,29): warning :                   ~~~~~~~~~~~^~~~~~
   GameRole.cpp
-E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(162,10): warning : conversion to ‘float’ from ‘std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>::result_type {aka long unsigned int}’ may alter its value [-Wconversion]
-E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(162,10): warning :     x =100+random_engine()%50;
-E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(162,10): warning :        ~~~^~~~~~~~~~~~~~~~~~~
-E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(163,10): warning : conversion to ‘float’ from ‘std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>::result_type {aka long unsigned int}’ may alter its value [-Wconversion]
-E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(163,10): warning :     z =100+random_engine() % 50;
-E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(163,10): warning :        ~~~^~~~~~~~~~~~~~~~~~~~~
+E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(164,10): warning : conversion to ‘float’ from ‘std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>::result_type {aka long unsigned int}’ may alter its value [-Wconversion]
+E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(164,10): warning :     x =100+random_engine()%50;
+E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(164,10): warning :        ~~~^~~~~~~~~~~~~~~~~~~
+E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(165,10): warning : conversion to ‘float’ from ‘std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>::result_type {aka long unsigned int}’ may alter its value [-Wconversion]
+E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(165,10): warning :     z =100+random_engine() % 50;
+E:\Study\Itcast\work\GameServer\Game\Game\GameRole.cpp(165,10): warning :        ~~~^~~~~~~~~~~~~~~~~~~~~
   main.cpp
   msg.pb.cpp
   RandName.cpp
